@@ -3,7 +3,7 @@
 
 ### 1. YOUR PROBLEM
 
-<img src="http://shrani.si/f/2r/o/1eebIhWR/img3543.png" width="350" align="middle">    
+<img src="http://shrani.si/f/2r/o/1eebIhWR/1/img3543.png" width="350" align="middle">    
 
 ### 1. POSSIBLE SOLUTIONS
 <img src="http://shrani.si/f/3L/Cu/11xWUpqk/simulator-screen-shot-ip.png" width="350" align="middle">
