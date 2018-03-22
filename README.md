@@ -10,5 +10,5 @@
 
 **For now we got just a Slovenian dictionary imported, we will add more in the future**
 
-*TODO:*
-- problems when the problem got more than one of the same character ("OBOTA").
+**TODO:**
+*- when a problem got more than one of the same character ("OBOTA") the app do not work right.*
