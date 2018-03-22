@@ -69,11 +69,13 @@ class ViewController: UIViewController {
         self.textview.text = ""
 
         self.serialQueue.async {
-
-            var hits: [String] = []
+            var hits: [[String]] = []
+            for _ in 0..<9 {
+                hits.append([])
+            }
 
             for word in self.wordsArray {
-                if word.count < 3 || word.count > 8 { continue }
+                if word.count < 3 || word.count > 8 || word.count > string.count  { continue }
                 var wordCOunter = 0
                 for char in characters {
                     if word.contains(char) {
@@ -82,38 +84,36 @@ class ViewController: UIViewController {
                 }
 
                 if wordCOunter == word.count {
-                    hits.append(word)
+                    hits[word.count].append(word)
                 }
-            }
-
-
-            hits.sort { (first, second) -> Bool in
-                return first.count > second.count
             }
 
             var newText = ""
-
-            var previousCount = 0
-            for hit in hits {
-                var first = false
-                if previousCount == 0 {
-                    newText += "\(hit.count): \n"
-                    previousCount = hit.count
-                    first = true
+            var firstLine = true
+            for var hitarray in hits {
+                if hitarray.count < 1 { continue }
+                hitarray.sort { (first, second) -> Bool in
+                    return first < second
                 }
 
-                if previousCount > hit.count {
-                    newText += "\n\n\(hit.count): \n"
-                    previousCount = hit.count
-                    first = true
+                var firstWord = true
+
+                if let first = hitarray.first {
+                    if firstLine {
+                        newText += "\(first.count): \n"
+                        firstLine = false
+                    } else {
+                        newText += "\n\n\(first.count): \n"
+                    }
                 }
 
-                if !first {
-                    newText += previousCount % 2 == 0 ? "🔸" : "🔹"
-                    first = false
+                for hit in hitarray {
+                    if !firstWord {
+                        newText += hit.count % 2 == 0 ? "🔸" : "🔹"
+                    }
+                    newText += hit.uppercased()
+                    firstWord = false
                 }
-
-                newText += hit.uppercased()
             }
 
             DispatchQueue.main.async {
