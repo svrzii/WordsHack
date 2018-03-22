@@ -14,13 +14,17 @@ class ViewController: UIViewController {
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
 
     var wordsArray = [String]()
+
+    fileprivate let serialQueue = DispatchQueue(label: "IXSerialQueue", attributes: [])
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.textfield.alpha = 0
         self.view.isUserInteractionEnabled = false
         self.activityIndicator.startAnimating()
-        DispatchQueue.global(qos: .background).async {
+
+        self.serialQueue.async {
             if let rtfPath = Bundle.main.url(forResource: "SlovenianWords", withExtension: "rtf") {
                 do {
                     let attributedStringWithRtf: NSAttributedString = try NSAttributedString(url: rtfPath, options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.rtf], documentAttributes: nil)
@@ -53,7 +57,6 @@ class ViewController: UIViewController {
                     }
                 }
             }
-
         }
     }
 
@@ -65,7 +68,8 @@ class ViewController: UIViewController {
         let characters = Array(string)
         self.textview.text = ""
 
-        DispatchQueue.global(qos: .background).async {
+        self.serialQueue.async {
+
             var hits: [String] = []
 
             for word in self.wordsArray {
@@ -117,6 +121,7 @@ class ViewController: UIViewController {
                 self.activityIndicator.stopAnimating()
                 self.view.isUserInteractionEnabled = true
             }
+
         }
     }
 }
